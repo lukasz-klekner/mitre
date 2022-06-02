@@ -2,10 +2,10 @@ import { Stack } from '@mui/material'
 
 import Tactics from './Tactics'
 
-function Nav({ id, navigator }) {
+const Nav = ({ id, navigator }) => {
   const tactics = navigator
     .map(({ name, tactics }) => {
-      const items = tactics.filter((item) => item.category_id === id)
+      const items = tactics.filter(({ category_id }) => category_id === id)
 
       return {
         name,
@@ -16,8 +16,8 @@ function Nav({ id, navigator }) {
 
   return (
     <Stack direction='row'>
-      {tactics.map((item) => (
-        <Tactics key={item.name} name={item.name} tactics={item.tactics} />
+      {tactics.map(({ name, tactics }) => (
+        <Tactics key={name} name={name} tactics={tactics} />
       ))}
     </Stack>
   )

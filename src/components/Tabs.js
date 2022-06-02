@@ -1,10 +1,21 @@
 import { useState } from 'react'
-import { Box, Tab } from '@mui/material'
+import { Box, Tab, styled } from '@mui/material'
 import { TabContext, TabList, TabPanel } from '@mui/lab'
 
+import Category from './Category'
 import Nav from './Nav'
 
-function Tabs({ categories, navigator }) {
+const S = {
+  Box: styled(Box)(() => ({
+    borderBottom: '1px solid divider',
+  })),
+
+  TabPanel: styled(TabPanel)(() => ({
+    padding: '0px',
+  })),
+}
+
+const Tabs = ({ categories, navigator }) => {
   const [activeTab, setActiveTab] = useState('Pre-ATT&CK')
 
   const handleTabChange = (_, newValue) => setActiveTab(newValue)
@@ -12,18 +23,18 @@ function Tabs({ categories, navigator }) {
   return (
     <Box>
       <TabContext value={activeTab}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <S.Box>
           <TabList onChange={handleTabChange}>
             {categories.map(({ name }) => (
-              <Tab key={name} label={name} value={name} />
+              <Tab key={name} label={<Category name={name} />} value={name} />
             ))}
           </TabList>
-        </Box>
+        </S.Box>
         <div>
-          {categories.map((category) => (
-            <TabPanel key={category.name} value={category.name}>
-              <Nav id={category.id} navigator={navigator} />
-            </TabPanel>
+          {categories.map(({ id, name }) => (
+            <S.TabPanel key={name} value={name}>
+              <Nav id={id} navigator={navigator} />
+            </S.TabPanel>
           ))}
         </div>
       </TabContext>
