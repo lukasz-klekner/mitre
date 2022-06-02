@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Box, Tab } from '@mui/material'
 import { TabContext, TabList, TabPanel } from '@mui/lab'
+
 import Nav from './Nav'
 
 function Tabs({ categories, navigator }) {
@@ -18,11 +19,13 @@ function Tabs({ categories, navigator }) {
             ))}
           </TabList>
         </Box>
-        {categories.map((category) => (
-          <TabPanel value={category.name}>
-            <Nav id={category.id} name={category.name} navigator={navigator} />
-          </TabPanel>
-        ))}
+        <div>
+          {categories.map((category) => (
+            <TabPanel key={category.name} value={category.name}>
+              <Nav id={category.id} navigator={navigator} />
+            </TabPanel>
+          ))}
+        </div>
       </TabContext>
     </Box>
   )

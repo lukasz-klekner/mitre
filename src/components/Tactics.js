@@ -1,19 +1,33 @@
-import { Box } from '@mui/material'
+import { Stack, Typography, styled } from '@mui/material'
 import Techniques from './Techniques'
 
-function Tactics({ name, tactics, navigator }) {
+const S = {
+  Stack: styled(Stack)(() => ({
+    width: '100%',
+  })),
+
+  Typography: styled(Typography)(() => ({
+    backgroundColor: '#dedede',
+  })),
+}
+
+function Tactics({ name, tactics }) {
   const techniques = tactics.map(({ name, techniques }) => ({
     name,
     techniques,
   }))
 
   return (
-    <>
-      <div>{name}</div>
+    <S.Stack>
+      <Typography>{name}</Typography>
       {techniques.map((item) => (
-        <Techniques name={item.name} techniques={item.techniques} />
+        <Techniques
+          key={item.name}
+          name={item.name}
+          techniques={item.techniques}
+        />
       ))}
-    </>
+    </S.Stack>
   )
 }
 
