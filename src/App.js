@@ -1,25 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from 'react'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Tabs from './components/Tabs'
+
+import './App.css'
+
+const BASE_URL = 'http://localhost:8000'
+const endpoints = {
+  categories: '/categories',
+  navigator: '/navigator',
 }
 
-export default App;
+function App() {
+  const [categories, setCategories] = useState([])
+  const [navigator, setNavigator] = useState([])
+
+  useEffect(() => {
+    ;(async () => {
+      try {
+        const response = await fetch(`${BASE_URL}${endpoints.categories}`)
+        const data = await response.json()
+
+        setCategories(data)
+      } catch (error) {
+        console.error(error)
+      }
+    })()
+  }, [])
+
+  useEffect(() => {
+    ;(async () => {
+      try {
+        const response = await fetch(`${BASE_URL}${endpoints.navigator}`)
+        const data = await response.json()
+
+        setNavigator(data)
+      } catch (error) {
+        console.error(error)
+      }
+    })()
+  }, [])
+
+  return <Tabs categories={categories} navigator={navigator} />
+}
+
+export default App
