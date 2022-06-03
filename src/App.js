@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 
+import Search from './components/Search'
 import Tabs from './components/Tabs'
 
 import './App.css'
@@ -40,7 +41,12 @@ function App() {
     })()
   }, [])
 
-  return <Tabs categories={categories} navigator={navigator} />
+  return (
+    <div>
+      <Search />
+      <Tabs categories={categories} navigator={navigator} />
+    </div>
+  )
 }
 
 export default App
