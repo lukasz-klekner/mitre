@@ -1,3 +1,4 @@
+import { Draggable } from 'react-beautiful-dnd'
 import { Typography, styled } from '@mui/material'
 
 import Card from './Card'
@@ -25,8 +26,19 @@ const Techniques = ({ name, techniques }) => {
   return (
     <div>
       <S.Typography>{name}</S.Typography>
-      {cardTechniques.map(({ description, id, name }) => (
-        <Card key={name} description={description} id={id} name={name} />
+      {cardTechniques.map(({ description, id, name }, index) => (
+        <Draggable key={id} draggableId={name} index={index}>
+          {(provided) => (
+            <Card
+              description={description}
+              id={id}
+              name={name}
+              ref={provided.innerRef}
+              {...provided.draggableProps}
+              {...provided.dragHandleProps}
+            />
+          )}
+        </Draggable>
       ))}
     </div>
   )

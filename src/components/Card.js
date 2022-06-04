@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { forwardRef, useState } from 'react'
 import { Box, IconButton, Tooltip, Typography, styled } from '@mui/material'
 import InfoIcon from '@mui/icons-material/Info'
 
@@ -25,7 +25,7 @@ const S = {
   })),
 }
 
-const Card = ({ description, id, name }) => {
+const Card = ({ description, id, name, ...rest }, ref) => {
   const [cardState, setCardState] = useState({
     [id]: {
       selected: false,
@@ -56,7 +56,12 @@ const Card = ({ description, id, name }) => {
   }
 
   return (
-    <S.Box onClick={handleClick} colorShadow={cardState[id].colorShadow}>
+    <S.Box
+      colorShadow={cardState[id].colorShadow}
+      onClick={handleClick}
+      ref={ref}
+      {...rest}
+    >
       <Typography>{name}</Typography>
       <S.TooltipWrapper>
         <Tooltip title={description} placement='right'>
@@ -69,4 +74,4 @@ const Card = ({ description, id, name }) => {
   )
 }
 
-export default Card
+export default forwardRef(Card)

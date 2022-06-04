@@ -1,3 +1,4 @@
+import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import { Typography, styled } from '@mui/material'
 
 import Techniques from './Techniques'
@@ -35,11 +36,17 @@ const Tactics = ({ name, tactics }) => {
   return (
     <S.Container>
       <S.Typography>{name}</S.Typography>
-      <S.Wrapper>
-        {techniques.map(({ name, techniques }) => (
-          <Techniques key={name} name={name} techniques={techniques} />
-        ))}
-      </S.Wrapper>
+      <DragDropContext>
+        <Droppable droppableId={name}>
+          {(provided) => (
+            <S.Wrapper {...provided.droppableProps} ref={provided.innerRef}>
+              {techniques.map(({ name, techniques }) => (
+                <Techniques key={name} name={name} techniques={techniques} />
+              ))}
+            </S.Wrapper>
+          )}
+        </Droppable>
+      </DragDropContext>
     </S.Container>
   )
 }
