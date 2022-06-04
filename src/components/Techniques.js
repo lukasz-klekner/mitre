@@ -25,8 +25,8 @@ const Techniques = ({ name, techniques }) => {
   return (
     <div>
       <S.Typography>{name}</S.Typography>
-      {cardTechniques.map(({ description, name }) => (
-        <Card key={name} name={name} description={description} />
+      {cardTechniques.map(({ description, id, name }) => (
+        <Card key={name} description={description} id={id} name={name} />
       ))}
     </div>
   )
