@@ -43,6 +43,7 @@ const Tactics = ({ name, tactics }) => {
               {techniques.map(({ name, techniques }) => (
                 <Techniques key={name} name={name} techniques={techniques} />
               ))}
+              {provided.placeholder}
             </S.Wrapper>
           )}
         </Droppable>

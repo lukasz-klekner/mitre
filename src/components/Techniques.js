@@ -27,7 +27,7 @@ const Techniques = ({ name, techniques }) => {
     <div>
       <S.Typography>{name}</S.Typography>
       {cardTechniques.map(({ description, id, name }, index) => (
-        <Draggable key={id} draggableId={name} index={index}>
+        <Draggable key={name} draggableId={name} index={index}>
           {(provided) => (
             <Card
               description={description}
