@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import { Typography, styled } from '@mui/material'
 
@@ -33,10 +34,21 @@ const Tactics = ({ name, tactics }) => {
     techniques,
   }))
 
-  const handleOnDragEnd = (result) => {
-    if (!result.destination) return
+  const [techniquesOrdered, setTechniquesOrdered] = useState(techniques)
 
-    console.log(result)
+  const handleOnDragEnd = ({ destination, source }) => {
+    if (!destination) return
+
+    const items = [...techniquesOrdered]
+    const reorderedItem = items
+      .find(({ name }) => name === source.droppableId)
+      .techniques.splice(source.index, 1)
+
+    items
+      .find(({ name }) => name === destination.droppableId)
+      .techniques.splice(destination.index, 0, reorderedItem[0])
+
+    setTechniquesOrdered(items)
   }
 
   return (
@@ -44,7 +56,7 @@ const Tactics = ({ name, tactics }) => {
       <S.Typography>{name}</S.Typography>
       <DragDropContext onDragEnd={handleOnDragEnd}>
         <S.Wrapper>
-          {techniques.map(({ name, techniques }) => (
+          {techniquesOrdered.map(({ name, techniques }) => (
             <Droppable droppableId={name} key={name}>
               {(provided) => (
                 <Techniques
