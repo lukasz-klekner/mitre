@@ -17,7 +17,12 @@ const Nav = ({ id, navigator }) => {
   return (
     <Stack direction='row'>
       {tactics.map(({ name, tactics }) => (
-        <Tactics key={name} name={name} tactics={tactics} />
+        <Tactics
+          key={name}
+          name={name}
+          tactics={tactics}
+          navigator={navigator}
+        />
       ))}
     </Stack>
   )

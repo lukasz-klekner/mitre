@@ -28,10 +28,27 @@ const S = {
   })),
 }
 
-const Tactics = ({ name, tactics }) => {
-  const techniques = tactics.map(({ name, techniques }) => ({
-    name,
-    techniques,
+const updateData = async (data, navigator, name) => {
+  const itemToUpdate = navigator.find((item) => item.name === name)
+  const updatedData = { ...itemToUpdate, tactics: data }
+
+  try {
+    await fetch(`http://localhost:8000/navigator/${itemToUpdate.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedData),
+    })
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+const Tactics = ({ name, navigator, tactics }) => {
+  const techniques = tactics.map((item) => ({
+    name: item.name,
+    ...item,
   }))
 
   const [techniquesOrdered, setTechniquesOrdered] = useState(techniques)
@@ -49,6 +66,7 @@ const Tactics = ({ name, tactics }) => {
       .techniques.splice(destination.index, 0, reorderedItem[0])
 
     setTechniquesOrdered(items)
+    updateData(items, navigator, name)
   }
 
   return (
