@@ -33,20 +33,30 @@ const Tactics = ({ name, tactics }) => {
     techniques,
   }))
 
+  const handleOnDragEnd = (result) => {
+    if (!result.destination) return
+
+    console.log(result)
+  }
+
   return (
     <S.Container>
       <S.Typography>{name}</S.Typography>
-      <DragDropContext>
-        <Droppable droppableId={name}>
-          {(provided) => (
-            <S.Wrapper {...provided.droppableProps} ref={provided.innerRef}>
-              {techniques.map(({ name, techniques }) => (
-                <Techniques key={name} name={name} techniques={techniques} />
-              ))}
-              {provided.placeholder}
-            </S.Wrapper>
-          )}
-        </Droppable>
+      <DragDropContext onDragEnd={handleOnDragEnd}>
+        <S.Wrapper>
+          {techniques.map(({ name, techniques }) => (
+            <Droppable droppableId={name} key={name}>
+              {(provided) => (
+                <Techniques
+                  name={name}
+                  techniques={techniques}
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                />
+              )}
+            </Droppable>
+          ))}
+        </S.Wrapper>
       </DragDropContext>
     </S.Container>
   )

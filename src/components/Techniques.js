@@ -1,3 +1,4 @@
+import { forwardRef } from 'react'
 import { Draggable } from 'react-beautiful-dnd'
 import { Typography, styled } from '@mui/material'
 
@@ -13,7 +14,7 @@ const S = {
   })),
 }
 
-const Techniques = ({ name, techniques }) => {
+const Techniques = ({ name, techniques }, ref) => {
   const { searchTerm } = useSearchContext()
 
   const cardTechniques =
@@ -24,7 +25,7 @@ const Techniques = ({ name, techniques }) => {
       : techniques
 
   return (
-    <div>
+    <div ref={ref}>
       <S.Typography>{name}</S.Typography>
       {cardTechniques.map(({ description, id, name }, index) => (
         <Draggable key={name} draggableId={name} index={index}>
@@ -44,4 +45,4 @@ const Techniques = ({ name, techniques }) => {
   )
 }
 
-export default Techniques
+export default forwardRef(Techniques)
