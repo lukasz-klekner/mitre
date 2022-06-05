@@ -3,6 +3,8 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import { Typography, styled } from '@mui/material'
 
 import Techniques from './Techniques'
+import { updateTechniques } from '../service/apiRequests'
+import { endpoints } from '../service/endpoint'
 
 const S = {
   Container: styled('div')(() => ({
@@ -32,17 +34,7 @@ const updateData = async (data, navigator, name) => {
   const itemToUpdate = navigator.find((item) => item.name === name)
   const updatedData = { ...itemToUpdate, tactics: data }
 
-  try {
-    await fetch(`http://localhost:8000/navigator/${itemToUpdate.id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(updatedData),
-    })
-  } catch (error) {
-    console.error(error)
-  }
+  await updateTechniques(endpoints.navigator_id(itemToUpdate.id), updatedData)
 }
 
 const Tactics = ({ name, navigator, tactics }) => {
